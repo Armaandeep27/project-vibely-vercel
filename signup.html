@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Vibely</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Left Section -->
+        <div class="left-section">
+            <h1 class="logo">Vibely</h1>
+            <h2 class="tagline">Create Your Account</h2>
+            <p class="welcome-text">Join Vibely and feel the music like never before.</p>
+
+            <form action="signup.php" method="POST">
+                <input type="text" name="name" placeholder="Full Name" required>
+                <input type="email" name="email" placeholder="Email Address" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+
+                <div class="buttons">
+                    <button type="submit" class="btn primary">Sign Up</button>
+                    <a href="index.html" class="btn secondary">Login</a>
+                </div>
+            </form>
+
+            <p class="or-text">Or sign up with</p>
+            <div class="social-login">
+                <a href="#">Facebook</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">Google</a>
+            </div>
+        </div>
+
+        <!-- Right Section -->
+        <div class="right-section">
+            <nav>
+                <a href="index.html">Login</a>
+                <a href="signup.html" class="active">SignUp</a>
+                <a href="plans.html">Plans</a>
+            </nav>
+            <img src="assets/song-pic.webp" alt="Music Heart Headphones">
+        </div>
+    </div>
+</body> 
+</html>
