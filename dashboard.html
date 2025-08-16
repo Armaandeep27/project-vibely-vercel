@@ -4,80 +4,127 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Vibely - Music Dashboard</title>
+
+  <!-- Styles -->
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- Supabase -->
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-  <script src="auth.js"></script>
+
+  <!-- Authentication -->
+  <script src="auth.js" defer></script>
 </head>
 <body>
-  <!-- Header -->
-  <div class="header">
+  <!-- HEADER -->
+  <header class="header">
     <div class="logo">Vibely</div>
     <div class="profile-section">
-      <div class="notifications" onclick="showNotifications()">🔔
+      <div class="notifications" onclick="showNotifications()" aria-label="Notifications">
+        🔔
         <span class="badge" id="notificationBadge">3</span>
       </div>
       <div class="profile-pic" id="profilePic" onclick="toggleProfileDropdown()">
         <span id="profileInitial">A</span>
       </div>
     </div>
-  </div>
+  </header>
 
-  <!-- Profile Dropdown -->
-  <div class="profile-dropdown" id="profileDropdown">
-    <div class="dropdown-item" onclick="viewProfile()"><span>👤</span><span>My Profile</span></div>
-    <div class="dropdown-item" onclick="viewLibrary()"><span>🎵</span><span>My Library</span></div>
-    <div class="dropdown-item" onclick="viewSettings()"><span>⚙️</span><span>Settings</span></div>
-    <div class="dropdown-item" onclick="toggleTheme()"><span>🌙</span><span>Dark Mode</span></div>
-    <div class="dropdown-item" onclick="logoutUser()" style="color:#ff4757;"><span>🚪</span><span>Logout</span></div>
-  </div>
+  <!-- PROFILE DROPDOWN -->
+  <nav class="profile-dropdown" id="profileDropdown">
+    <div class="dropdown-item" onclick="viewProfile()"><span>👤</span> <span>My Profile</span></div>
+    <div class="dropdown-item" onclick="viewLibrary()"><span>🎵</span> <span>My Library</span></div>
+    <div class="dropdown-item" onclick="viewSettings()"><span>⚙️</span> <span>Settings</span></div>
+    <div class="dropdown-item" onclick="toggleTheme()"><span>🌙</span> <span>Dark Mode</span></div>
+    <div class="dropdown-item logout" onclick="logoutUser()"><span>🚪</span> <span>Logout</span></div>
+  </nav>
 
-  <!-- Search -->
-  <div class="search-container">
-    <input type="text" class="search-bar" placeholder="Search songs, artists, albums..." id="searchInput">
-    <div class="search-icon" onclick="performSearch()">🔍</div>
-  </div>
+  <!-- SEARCH -->
+  <section class="search-container">
+    <input 
+      type="text" 
+      class="search-bar" 
+      id="searchInput" 
+      placeholder="Search songs, artists, albums..." 
+      aria-label="Search"
+    />
+    <button class="search-icon" onclick="performSearch()" aria-label="Search">🔍</button>
+  </section>
 
-  <!-- Content -->
-  <div class="content">
-    <div class="section-title">🕒 Recently Played</div>
+  <!-- MAIN CONTENT -->
+  <main class="content">
+    <!-- Recently Played -->
+    <h2 class="section-title">🕒 Recently Played</h2>
     <div class="recent-songs" id="recentSongs"></div>
 
-    <div class="section-title">🎧 Popular Categories</div>
+    <!-- Popular Categories -->
+    <h2 class="section-title">🎧 Popular Categories</h2>
     <div class="categories">
       <div class="category-card" onclick="openCategory('pop')">
-        <div class="category-icon">🎤</div><div class="category-name">Pop Hits</div><div class="category-count">120 songs</div>
+        <div class="category-icon">🎤</div>
+        <div class="category-name">Pop Hits</div>
+        <div class="category-count">120 songs</div>
       </div>
       <div class="category-card" onclick="openCategory('rock')">
-        <div class="category-icon">🎸</div><div class="category-name">Rock Classics</div><div class="category-count">89 songs</div>
+        <div class="category-icon">🎸</div>
+        <div class="category-name">Rock Classics</div>
+        <div class="category-count">89 songs</div>
       </div>
       <div class="category-card" onclick="openCategory('hiphop')">
-        <div class="category-icon">🎤</div><div class="category-name">Hip Hop</div><div class="category-count">156 songs</div>
+        <div class="category-icon">🎤</div>
+        <div class="category-name">Hip Hop</div>
+        <div class="category-count">156 songs</div>
       </div>
       <div class="category-card" onclick="openCategory('electronic')">
-        <div class="category-icon">🎛️</div><div class="category-name">Electronic</div><div class="category-count">203 songs</div>
+        <div class="category-icon">🎛️</div>
+        <div class="category-name">Electronic</div>
+        <div class="category-count">203 songs</div>
       </div>
     </div>
 
-    <div class="section-title">🔥 Trending Now</div>
+    <!-- Trending Now -->
+    <h2 class="section-title">🔥 Trending Now</h2>
     <div class="recent-songs" id="trendingSongs"></div>
-  </div>
+  </main>
 
-  <!-- Bottom Player -->
-  <div class="bottom-player" id="bottomPlayer">
+  <!-- BOTTOM PLAYER -->
+  <footer class="bottom-player" id="bottomPlayer">
+    <!-- Left: Current Song -->
     <div class="current-song">
-      <div class="current-song-image">🎵</div>
+      <div class="current-song-image">
+        <img id="currentSongCover" alt="Cover" />
+        <span class="cover-fallback">🎵</span>
+      </div>
       <div class="current-song-info">
         <h4 id="currentSongTitle">Select a song</h4>
         <p id="currentSongArtist">No song playing</p>
       </div>
     </div>
-    <div class="player-controls">
-      <button class="control-btn" onclick="previousSong()">⏮️</button>
-      <button class="control-btn play-btn" id="playBtn" onclick="togglePlay()">▶️</button>
-      <button class="control-btn" onclick="nextSong()">⏭️</button>
-    </div>
-  </div>
 
-  <script src="dashboard.js"></script>
+    <!-- Center: Controls + Progress -->
+    <div class="player-center">
+      <div class="player-controls">
+        <button class="control-btn" onclick="previousSong()" aria-label="Previous">⏮️</button>
+        <button class="control-btn play-btn" id="playBtn" onclick="togglePlay()" aria-label="Play/Pause">▶️</button>
+        <button class="control-btn" onclick="nextSong()" aria-label="Next">⏭️</button>
+      </div>
+      <div class="player-progress">
+        <span id="currentTime" class="time">0:00</span>
+        <input type="range" id="seekBar" min="0" max="100" value="0" aria-label="Seek">
+        <span id="totalTime" class="time">0:00</span>
+      </div>
+    </div>
+
+    <!-- Right: Volume -->
+    <div class="player-right">
+      <span class="volume-emoji">🔊</span>
+      <input type="range" id="volumeBar" min="0" max="1" step="0.01" value="1" aria-label="Volume">
+    </div>
+
+    <!-- Hidden Audio Element -->
+    <audio id="audioPlayer" preload="metadata" style="display:none;"></audio>
+  </footer>
+
+  <!-- Main Script -->
+  <script src="dashboard.js" defer></script>
 </body>
 </html>
