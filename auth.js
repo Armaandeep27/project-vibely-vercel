@@ -15,21 +15,15 @@ async function loginUser(email, password, rememberMe = false) {
             password: password
         })
 
-        if (error) {
-            throw error
-        }
+        if (error) throw error
 
-        // Store session preference
         if (rememberMe) {
             localStorage.setItem('vibely_remember', 'true')
         }
 
-        console.log('Login successful:', data)
         showMessage('Login successful! Redirecting...', 'success')
-        
-        // Redirect to main app after successful login
         setTimeout(() => {
-            window.location.href = '../dashboard.html' // Change to your main app page
+            window.location.href = '/Project-Vibely/dashboard.html'
         }, 1500)
 
         return data
@@ -53,13 +47,9 @@ async function signupUser(email, password, fullName = '') {
             }
         })
 
-        if (error) {
-            throw error
-        }
+        if (error) throw error
 
-        console.log('Signup successful:', data)
         showMessage('Account created! Check your email to verify your account.', 'success')
-        
         return data
     } catch (error) {
         console.error('Signup error:', error.message)
@@ -72,15 +62,11 @@ async function signupUser(email, password, fullName = '') {
 async function logoutUser() {
     try {
         const { error } = await supabaseClient.auth.signOut()
-        
-        if (error) {
-            throw error
-        }
+        if (error) throw error
 
         localStorage.removeItem('vibely_remember')
         showMessage('Logged out successfully', 'success')
         window.location.href = 'index.html'
-        
     } catch (error) {
         console.error('Logout error:', error.message)
         showMessage(error.message, 'error')
@@ -91,11 +77,7 @@ async function logoutUser() {
 async function checkAuth() {
     try {
         const { data: { user }, error } = await supabaseClient.auth.getUser()
-        
-        if (error) {
-            throw error
-        }
-
+        if (error) throw error
         return user
     } catch (error) {
         console.error('Auth check error:', error.message)
@@ -107,13 +89,9 @@ async function checkAuth() {
 async function resetPassword(email) {
     try {
         const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-            redirectTo: `${window.location.origin}/reset-password.html`
+            redirectTo: `${window.location.origin}/Project-Vibely/update-password.html`
         })
-
-        if (error) {
-            throw error
-        }
-
+        if (error) throw error
         showMessage('Password reset email sent! Check your inbox.', 'success')
         return true
     } catch (error) {
@@ -123,17 +101,35 @@ async function resetPassword(email) {
     }
 }
 
-// ===== UTILITY FUNCTIONS =====
+// ===== UPDATE PASSWORD (TOAST VERSION) =====
+async function updatePassword(event) {
+    event.preventDefault()
 
-// Show messages to user
-function showMessage(message, type = 'info') {
-    // Remove existing message if any
-    const existingMsg = document.querySelector('.auth-message')
-    if (existingMsg) {
-        existingMsg.remove()
+    const newPassword = document.getElementById("new-password").value
+    const confirmPassword = document.getElementById("confirm-password").value
+
+    if (newPassword !== confirmPassword) {
+        showMessage("Passwords do not match!", "error")
+        return
     }
 
-    // Create message element
+    const { error } = await supabaseClient.auth.updateUser({ password: newPassword })
+
+    if (error) {
+        showMessage(error.message, "error")
+    } else {
+        showMessage("Password updated successfully! Redirecting...", "success")
+        setTimeout(() => {
+            window.location.href = "index.html"
+        }, 2000)
+    }
+}
+
+// ===== UTILITY FUNCTIONS =====
+function showMessage(message, type = 'info') {
+    const existingMsg = document.querySelector('.auth-message')
+    if (existingMsg) existingMsg.remove()
+
     const messageEl = document.createElement('div')
     messageEl.className = `auth-message ${type}`
     messageEl.textContent = message
@@ -151,15 +147,8 @@ function showMessage(message, type = 'info') {
         ${type === 'error' ? 'background-color: #ef4444;' : ''}
         ${type === 'info' ? 'background-color: #3b82f6;' : ''}
     `
-
     document.body.appendChild(messageEl)
-
-    // Auto remove after 4 seconds
-    setTimeout(() => {
-        if (messageEl.parentNode) {
-            messageEl.remove()
-        }
-    }, 4000)
+    setTimeout(() => { if (messageEl.parentNode) messageEl.remove() }, 4000)
 }
 
 // Protect pages that require authentication
@@ -173,154 +162,108 @@ async function protectPage() {
 }
 
 // ===== EVENT LISTENERS =====
-
-// Wait for DOM to be ready
 document.addEventListener('DOMContentLoaded', function() {
-    
-    // ===== LOGIN PAGE =====
+    // LOGIN PAGE
     if (window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/')) {
         const loginForm = document.querySelector('form')
         if (loginForm) {
             loginForm.addEventListener('submit', async function(e) {
                 e.preventDefault()
-                
                 const email = loginForm.querySelector('input[name="email"]').value
                 const password = loginForm.querySelector('input[name="password"]').value
                 const rememberMe = loginForm.querySelector('input[name="remember"]')?.checked || false
-                
                 if (!email || !password) {
                     showMessage('Please fill in all fields', 'error')
                     return
                 }
-
-                // Show loading state
                 const submitBtn = loginForm.querySelector('button[type="submit"]')
                 const originalText = submitBtn.textContent
                 submitBtn.textContent = 'Logging in...'
                 submitBtn.disabled = true
-
                 await loginUser(email, password, rememberMe)
-
-                // Reset button state
                 submitBtn.textContent = originalText
                 submitBtn.disabled = false
             })
         }
     }
 
-    // ===== SIGNUP PAGE =====
+    // SIGNUP PAGE
     if (window.location.pathname.includes('signup.html')) {
         const signupForm = document.querySelector('form')
         if (signupForm) {
             signupForm.addEventListener('submit', async function(e) {
                 e.preventDefault()
-                
                 const fullName = signupForm.querySelector('input[name="name"]')?.value || ''
                 const email = signupForm.querySelector('input[name="email"]').value
                 const password = signupForm.querySelector('input[name="password"]').value
                 const confirmPassword = signupForm.querySelector('input[name="confirm_password"]')?.value || ''
-                
                 if (!email || !password || !fullName) {
                     showMessage('Please fill in all fields', 'error')
                     return
                 }
-
                 if (password !== confirmPassword) {
                     showMessage('Passwords do not match', 'error')
                     return
                 }
-
                 if (password.length < 6) {
                     showMessage('Password must be at least 6 characters', 'error')
                     return
                 }
-
-                // Show loading state
                 const submitBtn = signupForm.querySelector('button[type="submit"]')
                 const originalText = submitBtn.textContent
                 submitBtn.textContent = 'Creating Account...'
                 submitBtn.disabled = true
-
                 await signupUser(email, password, fullName)
-
-                // Reset button state
                 submitBtn.textContent = originalText
                 submitBtn.disabled = false
             })
         }
     }
 
-    // ===== FORGOT PASSWORD =====
+    // FORGOT PASSWORD
     if (window.location.pathname.includes('forgot-password.html')) {
         const forgotPasswordForm = document.querySelector('form')
         if (forgotPasswordForm) {
             forgotPasswordForm.addEventListener('submit', async function(e) {
                 e.preventDefault()
-                
                 const email = forgotPasswordForm.querySelector('input[name="email"]').value
-                
                 if (!email) {
                     showMessage('Please enter your email address', 'error')
                     return
                 }
-
                 await resetPassword(email)
             })
         }
     }
-
-    // Check if user is already logged in on login/signup pages
-    if (window.location.pathname.includes('index.html') || window.location.pathname.includes('signup.html')) {
-        checkAuth().then(user => {
-            if (user) {
-                showMessage('You are already logged in. Redirecting...', 'info')
-                setTimeout(() => {
-                    window.location.href = '../dasboard.html' // Change to your main app page
-                }, 2000)
-            }
-        })
-    }
 })
 
-// ===== SOCIAL LOGIN (Optional) =====
-// Google OAuth
+// ===== SOCIAL LOGIN =====
 async function loginWithGoogle() {
     try {
-        const { data, error } = await supabaseClient.auth.signInWithOAuth({
+        const { error } = await supabaseClient.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: `${window.location.origin}/dashboard.html`
+                redirectTo: `${window.location.origin}/Project-Vibely/dashboard.html`
             }
         })
-
-        if (error) {
-            throw error
-        }
+        if (error) throw error
     } catch (error) {
         console.error('Google login error:', error.message)
         showMessage('Google login failed', 'error')
     }
 }
 
-// Facebook OAuth
 async function loginWithFacebook() {
     try {
-        const { data, error } = await supabaseClient.auth.signInWithOAuth({
+        const { error } = await supabaseClient.auth.signInWithOAuth({
             provider: 'facebook',
             options: {
-                redirectTo: `${window.location.origin}/dashboard.html`
+                redirectTo: `${window.location.origin}/Project-Vibely/dashboard.html`
             }
         })
-
-        if (error) {
-            throw error
-        }
+        if (error) throw error
     } catch (error) {
         console.error('Facebook login error:', error.message)
         showMessage('Facebook login failed', 'error')
     }
 }
-
-// ===== LOGOUT FUNCTION FOR OTHER PAGES =====
-// Add this to pages that need logout functionality:
-// <button onclick="logoutUser()">Logout</button>

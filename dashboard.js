@@ -165,6 +165,8 @@ function showMessage(message, type = 'info') {
   setTimeout(() => { if (messageEl.parentNode) messageEl.remove(); }, 4000);
 }
 
+
+
 // Expose functions used by inline HTML onclicks (global scope)
 window.toggleProfileDropdown = toggleProfileDropdown;
 window.viewProfile = viewProfile;
