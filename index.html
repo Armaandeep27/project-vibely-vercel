@@ -1,54 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - Vibely</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div class="container">
-        <!-- Left Section -->
-        <div class="left-section">
-            <h1 class="logo">Vibely</h1>
-            <h2 class="tagline">Feel the Music, Live the Moment</h2>
-            <p class="welcome-text">Welcome back! Please login to your account.</p>
+      <!-- Left Section -->
+      <div class="left-section">
+        <h1 class="logo">Vibely</h1>
+        <h2 class="tagline">Feel the Music, Live the Moment</h2>
+        <p class="welcome-text">Welcome back! Please login to your account.</p>
 
-            <form action="login.php" method="POST">
-                <input type="email" name="email" placeholder="Email Address" required>
-                <input type="password" name="password" placeholder="Password" required>
+        <form method="post">
+          <input
+            type="email"
+            name="email"
+            placeholder="Email Address"
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
 
-                <div class="form-options">
-                    <label>
-                        <input type="checkbox" name="remember">
-                        Remember Me
-                    </label>
-                    <a href="forgot-password.html">Forgot Password?</a>
-                </div>
+          <div class="form-options">
+            <label>
+              <input type="checkbox" name="remember" />
+              Remember Me
+            </label>
+            <a href="forgot-password.html">Forgot Password?</a>
+          </div>
 
-                <div class="buttons">
-                    <button type="submit" class="btn primary">Login</button>
-                    <a href="signup.html" class="btn secondary">Sign Up</a>
-                </div>
-            </form>
+          <div class="buttons">
+            <button type="submit" class="btn primary">Login</button>
+            <a href="signup.html" class="btn secondary">Sign Up</a>
+          </div>
+        </form>
 
-            <p class="or-text">Or login with</p>
-            <div class="social-login">
-                <a href="#">Facebook</a>
-                <a href="#">LinkedIn</a>
-                <a href="#">Google</a>
-            </div>
+        <p class="or-text">Or login with</p>
+        <div class="social-login">
+          <a href="#">Facebook</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">Google</a>
         </div>
+      </div>
 
-        <!-- Right Section -->
-        <div class="right-section">
-            <nav>
-                <a href="index.html" class="active">Login</a>
-                <a href="signup.html">SignUp</a>
-                <a href="plans.html">Plans</a>
-            </nav>
-            <img src="assets/song-pic.webp" alt="Music Heart Headphones">
-        </div>
+      <!-- Right Section -->
+      <div class="right-section">
+        <nav>
+          <a href="index.html" class="active">Login</a>
+          <a href="signup.html">SignUp</a>
+          <a href="plans.html">Plans</a>
+        </nav>
+        <img src="assets/song-pic.webp" alt="Music Heart Headphones" />
+      </div>
     </div>
-</body>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="auth.js"></script>
+  </body>
 </html>

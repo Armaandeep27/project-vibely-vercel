@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vibely - Music Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="auth.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">Vibely</div>
+    <div class="profile-section">
+      <div class="notifications" onclick="showNotifications()">🔔
+        <span class="badge" id="notificationBadge">3</span>
+      </div>
+      <div class="profile-pic" id="profilePic" onclick="toggleProfileDropdown()">
+        <span id="profileInitial">A</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Dropdown -->
+  <div class="profile-dropdown" id="profileDropdown">
+    <div class="dropdown-item" onclick="viewProfile()"><span>👤</span><span>My Profile</span></div>
+    <div class="dropdown-item" onclick="viewLibrary()"><span>🎵</span><span>My Library</span></div>
+    <div class="dropdown-item" onclick="viewSettings()"><span>⚙️</span><span>Settings</span></div>
+    <div class="dropdown-item" onclick="toggleTheme()"><span>🌙</span><span>Dark Mode</span></div>
+    <div class="dropdown-item" onclick="logoutUser()" style="color:#ff4757;"><span>🚪</span><span>Logout</span></div>
+  </div>
+
+  <!-- Search -->
+  <div class="search-container">
+    <input type="text" class="search-bar" placeholder="Search songs, artists, albums..." id="searchInput">
+    <div class="search-icon" onclick="performSearch()">🔍</div>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    <div class="section-title">🕒 Recently Played</div>
+    <div class="recent-songs" id="recentSongs"></div>
+
+    <div class="section-title">🎧 Popular Categories</div>
+    <div class="categories">
+      <div class="category-card" onclick="openCategory('pop')">
+        <div class="category-icon">🎤</div><div class="category-name">Pop Hits</div><div class="category-count">120 songs</div>
+      </div>
+      <div class="category-card" onclick="openCategory('rock')">
+        <div class="category-icon">🎸</div><div class="category-name">Rock Classics</div><div class="category-count">89 songs</div>
+      </div>
+      <div class="category-card" onclick="openCategory('hiphop')">
+        <div class="category-icon">🎤</div><div class="category-name">Hip Hop</div><div class="category-count">156 songs</div>
+      </div>
+      <div class="category-card" onclick="openCategory('electronic')">
+        <div class="category-icon">🎛️</div><div class="category-name">Electronic</div><div class="category-count">203 songs</div>
+      </div>
+    </div>
+
+    <div class="section-title">🔥 Trending Now</div>
+    <div class="recent-songs" id="trendingSongs"></div>
+  </div>
+
+  <!-- Bottom Player -->
+  <div class="bottom-player" id="bottomPlayer">
+    <div class="current-song">
+      <div class="current-song-image">🎵</div>
+      <div class="current-song-info">
+        <h4 id="currentSongTitle">Select a song</h4>
+        <p id="currentSongArtist">No song playing</p>
+      </div>
+    </div>
+    <div class="player-controls">
+      <button class="control-btn" onclick="previousSong()">⏮️</button>
+      <button class="control-btn play-btn" id="playBtn" onclick="togglePlay()">▶️</button>
+      <button class="control-btn" onclick="nextSong()">⏭️</button>
+    </div>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>
