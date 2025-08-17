@@ -34,7 +34,10 @@
     <div class="dropdown-item" onclick="viewProfile()"><span>👤</span> <span>My Profile</span></div>
     <div class="dropdown-item" onclick="viewLibrary()"><span>🎵</span> <span>My Library</span></div>
     <div class="dropdown-item" onclick="viewSettings()"><span>⚙️</span> <span>Settings</span></div>
-    <div class="dropdown-item" onclick="toggleTheme()"><span>🌙</span> <span>Dark Mode</span></div>
+    <div class="dropdown-item" onclick="toggleTheme()">
+      <span>🌙</span>
+      <span class="theme-text">Dark Mode</span>
+    </div>
     <div class="dropdown-item logout" onclick="logoutUser()"><span>🚪</span> <span>Logout</span></div>
   </nav>
 
@@ -52,33 +55,18 @@
 
   <!-- MAIN CONTENT -->
   <main class="content">
-    <!-- Recently Played -->
-    <h2 class="section-title">🕒 Recently Played</h2>
+    <!-- Search Results -->
+    <h2 class="section-title">🔎 Search Results</h2>
     <div class="recent-songs" id="recentSongs"></div>
+
+    <!-- Albums Results -->
+    <h2 class="section-title">💿 Albums</h2>
+    <div class="albums" id="albumResults"></div>
 
     <!-- Popular Categories -->
     <h2 class="section-title">🎧 Popular Categories</h2>
-    <div class="categories">
-      <div class="category-card" onclick="openCategory('pop')">
-        <div class="category-icon">🎤</div>
-        <div class="category-name">Pop Hits</div>
-        <div class="category-count">120 songs</div>
-      </div>
-      <div class="category-card" onclick="openCategory('rock')">
-        <div class="category-icon">🎸</div>
-        <div class="category-name">Rock Classics</div>
-        <div class="category-count">89 songs</div>
-      </div>
-      <div class="category-card" onclick="openCategory('hiphop')">
-        <div class="category-icon">🎤</div>
-        <div class="category-name">Hip Hop</div>
-        <div class="category-count">156 songs</div>
-      </div>
-      <div class="category-card" onclick="openCategory('electronic')">
-        <div class="category-icon">🎛️</div>
-        <div class="category-name">Electronic</div>
-        <div class="category-count">203 songs</div>
-      </div>
+    <div class="categories" id="categoriesContainer">
+      <!-- JS will populate top categories dynamically here -->
     </div>
 
     <!-- Trending Now -->
@@ -123,6 +111,10 @@
     <!-- Hidden Audio Element -->
     <audio id="audioPlayer" preload="metadata" style="display:none;"></audio>
   </footer>
+
+  <!-- Spacer to prevent overlapping with bottom player -->
+<div style="height: 120px;"></div>
+
 
   <!-- Main Script -->
   <script src="dashboard.js" defer></script>
