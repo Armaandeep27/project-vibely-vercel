@@ -27,6 +27,13 @@ body {
 }
 
 /* === DARK MODE === */
+
+/* Dark mode: currently playing song text */
+body.dark .bottom-player .current-song-info h4,
+body.dark .bottom-player .current-song-info p {
+    color: #fff !important;
+}
+
 body.dark {
   background-color: #111;
   color: #f9fafb;
