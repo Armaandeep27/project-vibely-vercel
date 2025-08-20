@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Profile - Vibely</title>
+    <link rel="stylesheet" href="profile.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="profile-header">
+      <h2>My Profile</h2>
+      <button class="back-btn" onclick="goBack()">← Back</button>
+    </header>
+
+    <!-- Main Container -->
+    <main class="profile-container">
+      <div class="profile-card">
+        <img
+          src="../assets/song-pic.webp"
+          alt="Profile Icon"
+          class="profile-pic"
+        />
+        <h2 id="profile-name">Loading...</h2>
+        <p id="profile-email">Loading...</p>
+      </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/@supabase/supabase-js"></script>
+    <script src="../auth.js"></script>
+    <script src="profile.js"></script>
+    <script>
+      // Back button function
+      function goBack() {
+        window.location.href = "../dashboard.html"; // since dashboard is root
+      }
+
+      // Apply saved theme on load
+      window.addEventListener("DOMContentLoaded", () => {
+        const isDark = localStorage.getItem("theme") === "dark";
+        if (isDark) {
+          document.body.classList.add("dark");
+        }
+      });
+    </script>
+  </body>
+</html>
