@@ -1,97 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sign Up | Vibely</title>
-  <link rel="stylesheet" href="/style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
-  <script src="/auth.js" defer></script>
-</head>
-<body>
-  <main class="container">
-    <!-- Left Section -->
-    <section class="left-section" aria-label="Create Account">
-      <h1 class="logo">Vibely</h1>
-      <h2>Create Your Account</h2>
-      <p>Join Vibely and feel the music like never before.</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up - Vibely</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="/auth.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Left Section -->
+      <div class="left-section">
+        <h1 class="logo">Vibely</h1>
+        <h2 class="tagline">Create Your Account</h2>
+        <p class="welcome-text">
+          Join Vibely and feel the music like never before.
+        </p>
 
-      <form id="signupForm" novalidate>
-        <label for="name" class="visually-hidden">Full Name</label>
-        <input
-          id="name"
-          name="name"
-          type="text"
-          placeholder="Full Name"
-          required
-          autocomplete="name"
-          aria-required="true"
-        />
+        <form method="POST">
+          <input type="text" name="name" placeholder="Full Name" required />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email Address"
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+          <input
+            type="password"
+            name="confirm_password"
+            placeholder="Confirm Password"
+            required
+          />
 
-        <label for="email" class="visually-hidden">Email Address</label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          placeholder="Email Address"
-          required
-          autocomplete="email"
-          aria-required="true"
-        />
+          <div class="buttons">
+            <button type="submit" class="btn primary">Sign Up</button>
+            <a href="/index.html" class="btn secondary">Login</a>
+          </div>
+        </form>
 
-        <label for="password" class="visually-hidden">Password</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          placeholder="Password"
-          required
-          autocomplete="new-password"
-          aria-required="true"
-        />
-
-        <label for="confirm_password" class="visually-hidden">Confirm Password</label>
-        <input
-          id="confirm_password"
-          name="confirm_password"
-          type="password"
-          placeholder="Confirm Password"
-          required
-          autocomplete="new-password"
-          aria-required="true"
-        />
-
-        <div class="buttons">
-          <button type="submit" class="btn primary">Sign Up</button>
-          <a href="/index.html" class="btn secondary" role="button">Login</a>
+        <p class="or-text">Or sign up with</p>
+        <div class="social-login">
+          <a href="#">Facebook</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">Google</a>
         </div>
-      </form>
-
-      <p class="or-text">Or sign up with</p>
-      <div class="social-login" role="list">
-        <a href="#" role="listitem">Facebook</a>
-        <a href="#" role="listitem">LinkedIn</a>
-        <a href="#" role="listitem">Google</a>
       </div>
-    </section>
 
-    <!-- Right Section -->
-    <aside class="right-section" aria-label="Navigation and Image">
-      <nav>
-        <ul class="nav-links">
-          <li><a href="/index.html">Login</a></li>
-          <li><a href="/signup.html" class="active" aria-current="page">Sign Up</a></li>
-          <li><a href="/plans.html">Plans</a></li>
-        </ul>
-      </nav>
-      <img
-        src="/assets/song-pic.webp"
-        alt="Music Heart Headphones"
-        loading="lazy"
-        width="400"
-        height="400"
-      />
-    </aside>
-  </main>
-</body>
+      <!-- Right Section -->
+      <div class="right-section">
+        <nav>
+          <a href="/index.html">Login</a>
+          <a href="/signup.html" class="active">SignUp</a>
+          <a href="/plans.html">Plans</a>
+        </nav>
+        <img src="/assets/song-pic.webp" alt="Music Heart Headphones" />
+      </div>
+    </div>
+  </body>
 </html>
