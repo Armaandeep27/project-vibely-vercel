@@ -4,16 +4,16 @@ function login() {
 
   fetch("backend/login.php", {
     method: "POST",
-    body: new URLSearchParams({ email, password })
+    body: new URLSearchParams({ email, password }),
   })
-  .then(res => res.text())
-  .then(data => {
-    if (data === "success") {
-      window.location.href = "dashboard.html";
-    } else {
-      alert(data);
-    }
-  });
+    .then((res) => res.text())
+    .then((data) => {
+      if (data === "success") {
+        window.location.href = "dashboard.html";
+      } else {
+        alert(data);
+      }
+    });
 }
 
 function signup() {
@@ -23,13 +23,13 @@ function signup() {
 
   fetch("backend/signup.php", {
     method: "POST",
-    body: new URLSearchParams({ name, email, password })
+    body: new URLSearchParams({ name, email, password }),
   })
-  .then(res => res.text())
-  .then(data => {
-    alert(data);
-    if (data === "Account created!") {
-      window.location.href = "index.html";
-    }
-  });
+    .then((res) => res.text())
+    .then((data) => {
+      alert(data);
+      if (data === "Account created!") {
+        window.location.href = "index.html";
+      }
+    });
 }

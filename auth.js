@@ -24,7 +24,7 @@ async function loginUser(email, password, rememberMe = false) {
 
     showMessage("Login successful! Redirecting...", "success");
     setTimeout(() => {
-      window.location.href = "/Project-Vibely/dashboard.html";
+      window.location.href = "/dashboard.html";
     }, 1500);
 
     return data;
@@ -96,7 +96,7 @@ async function checkAuth() {
 async function resetPassword(email) {
   try {
     const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/Project-Vibely/update-password.html`,
+      redirectTo: `${window.location.origin}/update-password.html`,
     });
     if (error) throw error;
     showMessage("Password reset email sent! Check your inbox.", "success");
@@ -267,7 +267,7 @@ async function loginWithGoogle() {
     const { error } = await supabaseClient.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/Project-Vibely/dashboard.html`,
+        redirectTo: `${window.location.origin}/dashboard.html`,
       },
     });
     if (error) throw error;
@@ -282,7 +282,7 @@ async function loginWithFacebook() {
     const { error } = await supabaseClient.auth.signInWithOAuth({
       provider: "facebook",
       options: {
-        redirectTo: `${window.location.origin}/Project-Vibely/dashboard.html`,
+        redirectTo: `${window.location.origin}/dashboard.html`,
       },
     });
     if (error) throw error;

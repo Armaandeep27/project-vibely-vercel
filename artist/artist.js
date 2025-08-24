@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("backBtn").addEventListener("click", (e)=>{
     e.preventDefault();
     if (window.history.length > 1) window.history.back();
-    else window.location.href = "../dashboard.html";
+    else window.location.href = "/dashboard.html";
   });
 
   initPlayerControls();

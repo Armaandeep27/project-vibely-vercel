@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Profile - Vibely</title>
-    <link rel="stylesheet" href="profile.css" />
+    <link rel="stylesheet" href="/profile/profile.css" />
   </head>
   <body>
     <!-- Header -->
@@ -16,7 +16,7 @@
     <main class="profile-container">
       <div class="profile-card">
         <img
-          src="../assets/song-pic.webp"
+          src="/assets/song-pic.webp"
           alt="Profile Icon"
           class="profile-pic"
         />
@@ -27,12 +27,12 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/@supabase/supabase-js"></script>
-    <script src="../auth.js"></script>
-    <script src="profile.js"></script>
+    <script src="/auth.js"></script>
+    <script src="/profile/profile.js"></script>
     <script>
       // Back button function
       function goBack() {
-        window.location.href = "../dashboard.html"; // since dashboard is root
+        window.location.href = "/dashboard.html"; // since dashboard is root
       }
 
       // Apply saved theme on load

@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 function goBack() {
-  window.location.href = "../dashboard.html"; 
+  window.location.href = "/dashboard.html"; 
 }
 
 window.addEventListener("DOMContentLoaded", () => {
