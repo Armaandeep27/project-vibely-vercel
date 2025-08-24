@@ -509,14 +509,7 @@ window.viewSettings = () => {
 window.logoutUser = async () => {
   showMessage("Logging out...", "info");
   toggleProfileDropdown();
-
-  const { error } = await supabase.auth.signOut();
-  if (error) {
-    showMessage("Failed to log out: " + error.message, "error");
-  } else {
-    showMessage("Logged out successfully", "success");
-    // Optionally, redirect the user or refresh the page
-    // window.location.href = "/login";
-  }
+  
+  window.location.href = "index.html";
 };
 
