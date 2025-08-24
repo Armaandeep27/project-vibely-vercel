@@ -43,6 +43,7 @@ body.dark .header,
 body.dark .bottom-player,
 body.dark .song-card,
 body.dark .album-card,
+body.dark .artist-card,
 body.dark .category-card,
 body.dark .search-bar {
   background-color: #1f1f1f;
@@ -74,7 +75,8 @@ body.dark .category-card {
 }
 
 body.dark .song-card,
-body.dark .album-card {
+body.dark .album-card,
+body.dark .artist-card {
     background-color: #1a1a1a;
     border: 1px solid #333;
 }
@@ -214,7 +216,8 @@ body.dark #profileInitial {
 }
 
 .song-card,
-.album-card {
+.album-card,
+.artist-card {
   min-width: 160px;
   max-width: 180px;
   scroll-snap-align: start;
@@ -416,6 +419,53 @@ body.dark #profileInitial {
 .player-right { display: flex; align-items: center; gap: 8px; justify-self: end; }
 .volume-emoji { font-size: 16px; }
 #volumeBar { width: 110px; accent-color: var(--primary); }
+
+/*  Artists */
+
+.artists {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 16px;
+}
+
+/* .artist-card {
+  background: var(--card-bg, #222);
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+} */
+
+.artist-card:hover {
+  transform: scale(1.05);
+}
+
+/* .artist-card {
+  color: var(--text-color);
+  background-color: transparent;
+  border-radius: 12px;
+  border-color: white;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  max-width: 250px;
+  margin: auto;
+  
+} */
+
+.artist-card img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.artist-card h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+
 
 /* === PROFILE DROPDOWN (FIXED) === */
 .profile-dropdown {

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Artist • Vibely</title>
+
+  <!-- Reuse dashboard styles -->
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+
+  <style>
+    /* small extras for the artist hero */
+    .artist-hero {
+      padding: 18px 20px 6px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .artist-pfp {
+      width: 84px; height: 84px; border-radius: 50%;
+      overflow: hidden; background: #efefef; flex: 0 0 auto;
+    }
+    .artist-pfp img { width: 100%; height: 100%; object-fit: cover; display:block; }
+    .artist-meta h1 { font-size: 22px; margin: 0 0 6px; }
+    .artist-meta p { color: var(--text-light); font-size: 13px; }
+
+    .page-topbar {
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 14px 20px; border-bottom: 1px solid #f3d6df; background:#fff;
+    }
+    body.dark .page-topbar { background:#1f1f1f; border-color:#555; }
+    .back-pill {
+      display:inline-flex; align-items:center; gap:8px;
+      background: var(--secondary); color: var(--primary);
+      padding: 8px 12px; border-radius: 999px; text-decoration:none;
+      font-weight: 700;
+    }
+    .back-pill:hover { filter: brightness(0.98); }
+
+    .theme-toggle {
+      cursor: pointer;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Top bar -->
+  <div class="page-topbar">
+    <a href="#" id="backBtn" class="back-pill"><i class="fa-solid fa-arrow-left"></i> Back</a>
+    <div class="logo">Vibely</div>
+    <!-- <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+      <i class="fa-solid fa-moon"></i>
+    </button> -->
+  </div>
+
+  <!-- Artist hero -->
+  <section class="artist-hero">
+    <div class="artist-pfp">
+      <img id="artistImage" alt="Artist image"/>
+    </div>
+    <div class="artist-meta">
+      <h1 id="artistName">Artist</h1>
+      <p id="artistExtra">Loading…</p>
+    </div>
+  </section>
+
+  <!-- Songs (reuse dashboard carousel styles) -->
+  <main class="content">
+    <h2 class="section-title">🎵 Top Songs</h2>
+    <div class="recent-songs" id="artistSongs"></div>
+  </main>
+
+  <!-- Bottom Player (exactly like dashboard) -->
+  <footer class="bottom-player" id="bottomPlayer">
+    <div class="current-song">
+      <div class="current-song-image">
+        <img id="currentSongCover" alt="Cover" />
+        <span class="cover-fallback">🎵</span>
+      </div>
+      <div class="current-song-info">
+        <h4 id="currentSongTitle">Select a song</h4>
+        <p id="currentSongArtist">No song playing</p>
+      </div>
+    </div>
+
+    <div class="player-center">
+      <div class="player-controls">
+        <button class="control-btn" onclick="previousSong()" aria-label="Previous">
+          <i class="fa-solid fa-backward"></i>
+        </button>
+        <button id="play-pause-btn" class="control-btn" onclick="togglePlay()" aria-label="Play/Pause">
+          <i class="fas fa-play" id="play-icon"></i>
+        </button>
+        <button class="control-btn" onclick="nextSong()" aria-label="Next">
+          <i class="fa-solid fa-forward"></i>
+        </button>
+      </div>
+      <div class="player-progress">
+        <span id="currentTime" class="time">0:00</span>
+        <input type="range" id="seekBar" min="0" max="100" value="0" aria-label="Seek"/>
+        <span id="totalTime" class="time">0:00</span>
+      </div>
+    </div>
+
+    <div class="player-right">
+      <span class="volume-emoji">🔊</span>
+      <input type="range" id="volumeBar" min="0" max="1" step="0.01" value="1" aria-label="Volume"/>
+    </div>
+
+    <audio id="audioPlayer" preload="metadata" style="display:none"></audio>
+  </footer>
+
+  <div style="height:120px"></div>
+
+  <script src="artist.js" defer></script>
+  <script>
+    // THEME HANDLER
+    const themeToggle = document.getElementById("themeToggle");
+    const body = document.body;
+
+    // Apply stored theme
+    const savedTheme = localStorage.getItem("theme") || "light";
+    if (savedTheme === "dark") {
+      body.classList.add("dark");
+    }
+
+    // themeToggle.addEventListener("click", () => {
+    //   body.classList.toggle("dark");
+    //   const isDark = body.classList.contains("dark");
+    //   localStorage.setItem("theme", isDark ? "dark" : "light");
+    // });
+  </script>
+</body>
+</html>

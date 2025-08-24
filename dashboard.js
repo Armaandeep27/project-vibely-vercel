@@ -89,7 +89,6 @@ function escapeHtml(str) {
   );
 }
 
-// --- Fetch Songs / Albums ---
 async function fetchItems(type, query = "") {
   try {
     let url = `https://saavn.dev/api/search/${type}`;
@@ -97,6 +96,19 @@ async function fetchItems(type, query = "") {
     const res = await fetch(url);
     if (!res.ok) throw new Error("Network response failed");
     const data = await res.json();
+
+    if (type === "artists") {
+      return (
+        data.data?.results?.map((artist) => ({
+          id: artist.id,
+          name: artist.name || "Unknown Artist",
+          image: artist.image?.[2]?.url || "",
+          type: "artist",
+        })) || []
+      );
+    }
+
+    // Existing code for songs/albums
     return (
       data.data?.results?.map((item) => ({
         id: item.id,
@@ -114,6 +126,7 @@ async function fetchItems(type, query = "") {
     return [];
   }
 }
+
 
 // --- Load Trending Songs ---
 async function loadTrendingSongs() {
@@ -187,6 +200,39 @@ function openCategoryPage(category) {
   window.currentPlaylist = category.songs.filter((s) => s.type !== "album");
   window.currentIndex = -1;
 }
+
+function renderArtists(artists, containerId = "artistResults") {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = "";
+  if (!artists.length) {
+    container.innerHTML = '<p style="color:#888;">No artists found</p>';
+    return;
+  }
+
+  artists.forEach((artist) => {
+    const card = document.createElement("div");
+    card.className = "artist-card";
+    card.innerHTML = `
+      <div class="artist-image">
+        ${
+          artist.image
+            ? `<img src="${artist.image}" alt="${escapeHtml(artist.name)}">`
+            : "🎤"
+        }
+      </div>
+      <div class="artist-name">${escapeHtml(artist.name)}</div>
+    `;
+
+    card.onclick = () => {
+      // redirect to artist page
+      window.location.href = `artist/artist.html?id=${artist.id}`;
+    };
+
+    container.appendChild(card);
+  });
+}
+
 
 async function fetchAlbumSongs(albumId) {
   try {
@@ -292,15 +338,23 @@ function initializeSearch() {
 async function performSearch() {
   const query = document.getElementById("searchInput")?.value.trim();
   if (!query) return;
+
   const songs = await fetchItems("songs", query);
   const albums = await fetchItems("albums", query);
+  const artists = await fetchItems("artists", query);
+
+  // ✅ Limit artists to top 2
+  const topArtists = artists.slice(0, 1);
 
   renderSongs(songs, "recentSongs");
   renderSongs(albums, "albumResults");
+  renderArtists(topArtists, "artistResults");
 
   window.currentPlaylist = songs;
   window.currentIndex = -1;
 }
+
+
 
 // --- Player ---
 function playSong(song, index = null, playlist = null) {
