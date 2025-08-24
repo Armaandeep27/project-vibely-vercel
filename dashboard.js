@@ -484,6 +484,19 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+
+// --- Keyboard Controls ---
+document.addEventListener("keydown", (e) => {
+  // Ignore if typing in input/textarea
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+
+  if (e.code === "Space") {
+    e.preventDefault(); // stop page scroll
+    togglePlay();
+  }
+});
+
+
 // --- Window Expose ---
 window.toggleProfileDropdown = toggleProfileDropdown;
 window.viewProfile = () => {
